@@ -1,13 +1,12 @@
 import Express from "express";
 import { nanoid } from "nanoid";
+import { extname } from "path";
 import multer from "multer";
 import createHttpError from "http-errors";
 import { checkMediasSchema, triggerBadRequest } from "./validator.js";
 import { getMedias, writeMedias } from "../../lib/fs-tools.js";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-
-const mediasRouter = Express.Router();
 
 const cloudinaryUploader = multer({
   storage: new CloudinaryStorage({
@@ -16,7 +15,9 @@ const cloudinaryUploader = multer({
       folder: "netflix/poster",
     },
   }),
-}).single("cover");
+}).single("poster");
+
+const mediasRouter = Express.Router();
 
 mediasRouter.post(
   "/",
@@ -26,14 +27,14 @@ mediasRouter.post(
     try {
       const newMedia = {
         ...req.body,
-        id: nanoid(),
+        imdbID: nanoid(),
         createdAt: new Date(),
         updatedAt: new Date(),
       };
       const mediaList = await getMedias();
       mediaList.push(newMedia);
       await writeMedias(mediaList);
-      res.status(201).send({ id: newMedia.id });
+      res.status(201).send({ id: newMedia.imdbID });
     } catch (error) {
       next(error);
     }
@@ -43,19 +44,10 @@ mediasRouter.post(
 mediasRouter.get("/", async (req, res, next) => {
   try {
     const mediaList = await getMedias();
-    if (req.query && req.query.category) {
-      const fillteredMedias = mediaList.filter(
-        (media) => media.category === req.query.category
-      );
-      res.status(200).send(fillteredMedias);
-    } else if (
-      Object.keys(req.query).length === 0 &&
-      req.query.constructor === Object
-    ) {
-      res.status(200).send(mediaList);
-    } else {
-      next(createHttpError(404, `Invalid route!`));
-    }
+    const fillteredMedias = mediaList.filter(
+      (media) => media.category === req.query.category
+    );
+    res.status(200).send(fillteredMedias);
   } catch (error) {
     next(error);
   }
@@ -64,12 +56,15 @@ mediasRouter.get("/", async (req, res, next) => {
 mediasRouter.get("/:id", triggerBadRequest, async (req, res, next) => {
   try {
     const mediaList = await getMedias();
-    const media = mediaList.find((media) => media.id === req.params.id);
+    const media = mediaList.find((media) => media.imdbID === req.params.id);
     if (media) {
       res.status(200).send(media);
     } else {
       next(
-        createHttpError(404, `media with the id ${req.params.id} not found!`)
+        createHttpError(
+          404,
+          `media with the imdbID ${req.params.id} not found!`
+        )
       );
     }
   } catch (error) {
@@ -80,7 +75,9 @@ mediasRouter.get("/:id", triggerBadRequest, async (req, res, next) => {
 mediasRouter.put("/:id", triggerBadRequest, async (req, res, next) => {
   try {
     const mediaList = await getMedias();
-    const index = mediaList.findIndex((media) => media.id === req.params.id);
+    const index = mediaList.findIndex(
+      (media) => media.imdbID === req.params.id
+    );
     if (index !== -1) {
       const oldMedia = mediaList[index];
       const updatedMedia = {
@@ -93,7 +90,7 @@ mediasRouter.put("/:id", triggerBadRequest, async (req, res, next) => {
       await writeMedias(mediaList);
       res.status(200).send(updatedMedia);
     } else {
-      createHttpError(404, `media with the id ${req.params.id} not found!`);
+      createHttpError(404, `media with the imdbID ${req.params.id} not found!`);
     }
   } catch (error) {}
 });
@@ -102,13 +99,15 @@ mediasRouter.delete("/:id", async (req, res, next) => {
   try {
     const mediaList = await getMedias();
     const updatedMediaList = mediaList.filter(
-      (media) => media.id !== req.params.id
+      (media) => media.imdbID !== req.params.id
     );
     if (mediaList.length !== updatedMediaList.length) {
       writeMedias(updatedMediaList);
       res.status(204).send();
     } else {
-      next(createHttpError(404, `media with id ${req.params.id} not found!`)); //
+      next(
+        createHttpError(404, `media with imdbID ${req.params.id} not found!`)
+      ); //
     }
   } catch (error) {
     next(error);
@@ -118,11 +117,10 @@ mediasRouter.delete("/:id", async (req, res, next) => {
 mediasRouter.put("/:id/poster", cloudinaryUploader, async (req, res, next) => {
   try {
     if (req.file !== undefined) {
-      const originalFileExtension = extname(req.file.originalname);
-      const fileName = req.params.id + originalFileExtension;
-      await saveProductsImg(fileName, req.file.buffer);
       const mediaList = await getMedias();
-      const index = mediaList.findIndex((media) => media.id === req.params.id);
+      const index = mediaList.findIndex(
+        (media) => media.imdbID === req.params.id
+      );
       if (index !== -1) {
         console.log(index);
         const oldMedia = mediaList[index];
