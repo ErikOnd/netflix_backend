@@ -1,1 +1,11 @@
-[{"title":"Avatar","year":"2006","type":"Action","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678461802/netflix/poster/bxpbc1qqpaxibnv1fcq6.jpg","imdbID":"IKLyuTcBM8yAE0YqmLu3G","createdAt":"2023-03-10T15:23:21.260Z","updatedAt":"2023-03-10T15:40:41.424Z"}]
+[
+  {
+    "title": "New Movie",
+    "year": "2009",
+    "type": "Comedy",
+    "poster": "https://res.cloudinary.com/dyy38u8x7/image/upload/v1678465818/netflix/poster/puwc4d9uwgredrwhx8m8.jpg",
+    "imdbID": "1bW_8vThvkruu58WhivpD",
+    "createdAt": "2023-03-10T16:30:18.166Z",
+    "updatedAt": "2023-03-10T16:30:19.310Z"
+  }
+]
