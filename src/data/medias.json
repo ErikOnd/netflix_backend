@@ -1,11 +1,1 @@
-[
-  {
-    "title": "New Movie",
-    "year": "2009",
-    "type": "Comedy",
-    "poster": "https://res.cloudinary.com/dyy38u8x7/image/upload/v1678465818/netflix/poster/puwc4d9uwgredrwhx8m8.jpg",
-    "imdbID": "1bW_8vThvkruu58WhivpD",
-    "createdAt": "2023-03-10T16:30:18.166Z",
-    "updatedAt": "2023-03-10T16:30:19.310Z"
-  }
-]
+[{"title":"New Movie","year":"2008","type":"Comedy","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466350/netflix/poster/egzltvtv30v6prqxu6mp.jpg","imdbID":"3BwoRnMI3KIbuolBAtKgi","createdAt":"2023-03-10T16:39:09.938Z","updatedAt":"2023-03-10T16:39:11.124Z"},{"title":"Another movie","year":"","type":"Horror","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466397/netflix/poster/mnibtttavseytdvsvsjk.jpg","imdbID":"xD2_qb_JlhEVMyTya-xqA","createdAt":"2023-03-10T16:39:56.689Z","updatedAt":"2023-03-10T16:39:57.450Z"},{"title":"Black panter","year":"2009","type":"Comedy","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466492/netflix/poster/rbwyfuftqpdotfuzscgb.jpg","imdbID":"L5Ow3fZ0r2n7ywSVfvuxi","createdAt":"2023-03-10T16:41:29.528Z","updatedAt":"2023-03-10T16:41:32.980Z"},{"title":"some movie","year":"","type":"Horror","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466555/netflix/poster/c8xxomyoxm8bri8fvmdr.jpg","imdbID":"fCqu_erVDvE7Iu1r_Tvyz","createdAt":"2023-03-10T16:42:34.457Z","updatedAt":"2023-03-10T16:42:35.720Z"},{"title":"Action","year":"2334","type":"Horror","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466616/netflix/poster/koq5metwwynny0vzzsws.jpg","imdbID":"MZb_gP7gbApcnyqMPk9SI","createdAt":"2023-03-10T16:43:35.543Z","updatedAt":"2023-03-10T16:43:36.886Z"},{"title":"Scream ","year":"2008","type":"Horror","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466684/netflix/poster/mng726ruvvxt95dzxxdf.jpg","imdbID":"N7jCw_MU9RtEZzDTeb1RR","createdAt":"2023-03-10T16:44:43.228Z","updatedAt":"2023-03-10T16:44:44.798Z"},{"title":"Funny Movie","year":"2009","type":"Comedy","poster":"https://res.cloudinary.com/dyy38u8x7/image/upload/v1678466742/netflix/poster/nsuka9amxseepumdgg7c.jpg","imdbID":"JrUqKM2Wj1XQyKCCy_PNJ","createdAt":"2023-03-10T16:45:40.840Z","updatedAt":"2023-03-10T16:45:43.195Z"}]
