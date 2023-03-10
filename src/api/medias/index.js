@@ -7,6 +7,8 @@ import { checkMediasSchema, triggerBadRequest } from "./validator.js";
 import { getMedias, writeMedias } from "../../lib/fs-tools.js";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { getPDFReadableStream } from "../../lib/pdf-tools.js";
+import { pipeline } from "stream";
 
 const cloudinaryUploader = multer({
   storage: new CloudinaryStorage({
@@ -126,7 +128,7 @@ mediasRouter.put("/:id/poster", cloudinaryUploader, async (req, res, next) => {
         const oldMedia = mediaList[index];
         const updatedMedia = {
           ...oldMedia,
-          cover: req.file.path,
+          poster: req.file.path,
           updatedAt: new Date(),
         };
         mediaList[index] = updatedMedia;
@@ -136,6 +138,23 @@ mediasRouter.put("/:id/poster", cloudinaryUploader, async (req, res, next) => {
     } else {
       next(createHttpError(404, `The uploaded image is undefined`));
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+mediasRouter.get("/:id/pdf", async (req, res, next) => {
+  try {
+    res.setHeader("Content-Disposition", "attachment; filename=movie.pdf");
+
+    const medias = await getMedias();
+    const media = medias.find((media) => media.imdbID === req.params.id);
+    const source = await getPDFReadableStream(media);
+    const destination = res;
+
+    pipeline(source, destination, (err) => {
+      if (err) console.log(err);
+    });
   } catch (error) {
     next(error);
   }
